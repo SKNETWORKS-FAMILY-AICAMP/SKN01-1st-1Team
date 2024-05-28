@@ -1,8 +1,5 @@
 # selenium으로 사이트 뜯기
-
-#from helpers.db import MySQLDatabase
 from helpers.dbsele import *
-#from helpers.crawling import 수집
 from helpers.crawlingsele import User
 import pandas as pd
 import time
@@ -45,27 +42,3 @@ if __name__ == "__main__":
     )
     # 너의 경로 입력
     df.to_excel(r"C:\Users\hojun\Downloads\workspace01\data\케이카.xlsx")
-
-    # 테이블로 레코드 인서트
-    record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\케이카.xlsx"))
-    
-    # 파이썬과 db연동해서 crud 실행 
-    # try:
-    #     user = "root"
-    #     password = ""
-    #     host = "localhost"
-    #     port = 3306
-    #     db = "project"
-
-    #     db_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{db}"
-    #     db = MySQLDatabase(db_url)
-
-    #     # 변수 = eval(변수) : eval 기능 객체화시켜줌 >> 보안적으로 문제가 되어 사용 권장은 x
-    #     # 이걸 활용하면 동적 변수로서 사용가능 하지만  __repr__ 을 활용하자
-    #     print(db.__repr__)
-    #     db.add_user("john_doe", "john@example.com")
-    #     user =  db.get_user_by_username("john_doe")
-
-    # except Exception as e:
-    #     print("DB부분처리안됨")    
-    #     print("e")
