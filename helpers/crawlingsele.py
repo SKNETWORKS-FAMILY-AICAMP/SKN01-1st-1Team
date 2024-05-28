@@ -107,3 +107,6 @@ class User:
         print(self.browser.window_handles) # 팝업된 윈도우들 몇개있나 보여주기
         self.browser.switch_to.window(self.browser.window_handles[number]) # 기존 객체에서 1번 객체(윈도우)로 이동 by 'switch_to'
     
+    def switchwindow(self):
+        window_handle = "window_handle_to_switch"
+        self.browser.switch_to.window(window_handle)

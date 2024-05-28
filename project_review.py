@@ -18,24 +18,34 @@ if __name__ == "__main__":
     model = [] # 차종
     date = [] # 날짜
     image = [] # 이미지 ?
-    
+
     # 모든 페이지 크롤링
     cnt = 0
     for i in range(14):
         #time.sleep(1)
         user.delay(1)
-        # > 버튼으로 다음 페이지 넘어가기
-        user.click_button(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[3]/div/ul/li[12]/button')
-        for j in range(1,10): # 페이지 넘어가는 기능 (여기서 객체, 페이지넘버 순환)
-            #time.sleep(1)
-            user.delay(1)
-            title.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[1]/p'))
-            review.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[2]/div/p'))
-            model.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[2]/p/span[1]'))
-            date.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[2]/p/span[2]'))
+        for j in range(1,9): # 8개의 리뷰 클릭
+            # 리뷰 박스 클릭
+            user.객체선택하고클릭(f'//*[@id="app"]/div[2]/div[1]/div/div[{j+1}]/ul')
+            time.sleep(1)
+            title.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/h5'))
+            review.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/p'))
+            # 차종, 날짜 같이 선택되는거 분리
+            model_date = user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/span')
+            mo, da = model_date[:-10], model_date[-10:]
+            model.append(mo)
+            date.append(da)
             # image.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[2]/p/span[2]'))
-        # time.sleep(1) # 잘 보기위해 n초정도 보기
+            
+            # 다 넣었다면 리뷰창 나가기 (x창 눌러서)
+            user.click_button(f'//*[@id="app"]/div[2]/div[2]/div/div/div[1]/button')
         user.delay(3)
+        # 다음 페이지 넘어가기
+        # 10개 씩일땐 li[12]인데 마지막즘 되면 그거에 맞게끔 순회해야함 여기의 경우 14번까지라, 10번 넘어가면 li[6]이 우클릭
+        if i < 11:
+            user.click_button(f'//*[@id="app"]/div[2]/div[1]/div/div[12]/div/ul/li[12]/button')
+        else:
+            user.click_button(f'//*[@id="app"]/div[2]/div[1]/div/div[12]/div/ul/li[6]/button')
 
     df = pd.DataFrame(
         data=zip(title, review, model, date),
