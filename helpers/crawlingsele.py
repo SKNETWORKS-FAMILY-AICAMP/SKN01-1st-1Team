@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import subprocess # command 부르는 용도
-from urllib.parse import quote_plus
 import os
 
 # 크롤링을 돌리는 클래스 만들기
@@ -55,19 +54,27 @@ class User:
         self.browser.find_element(By.XPATH, user_xpath).send_keys(item_name) # xpath 방식으로 element 찾겠다.
 
     def 객체선택하고클릭(self, user_xpath):
-        self.browser.find_element(By.XPATH, user_xpath).click() # 클릭 기능 구현
+        try: #일반클릭
+            self.browser.find_element(By.XPATH, user_xpath).click()
+        # element is not clickable error 발생시 actionchains 활용
+        # 객체가 클릭 안되는 경우 마우스 조금 이동해서 클릭
+        except: 
+            clickable = self.browser.find_element(By.XPATH, user_xpath)
+            action = ActionChains(self.browser).move_to_element(clickable)
+            action.perform()
+            clickable.click()
 
-    def click_button(self,button_xpath):
+    def click_button(self,user_xpath):
         try:
-            #self.browser.find_element(By.XPATH, button_xpath).click()
-            self.browser.find_element(By.XPATH, button_xpath).send_keys(Keys.ENTER)
+            #self.browser.find_element(By.XPATH, user_xpath).click()
+            self.browser.find_element(By.XPATH, user_xpath).send_keys(Keys.ENTER)
             #ActionChains(self.browser).click(clickable).perform()
             print('버튼 클릭 성공')
         except Exception as e:
             print('By.XPATH로 클릭되지 않습니다. By.PARTIAL_LINK_TEXT로 접근합니다! ')
             time.sleep(1) # 딜레이를 충분히 줘야 에러가 안 남
             try:
-                totext = self.find_ele_text(button_xpath) # 버튼 이름 텍스트로 가져와서
+                totext = self.find_ele_text(user_xpath) # 버튼 이름 텍스트로 가져와서
                 self.browser.find_element(By.PARTIAL_LINK_TEXT, totext).click() # By.PARTIAL_LINK_TEXT 안에 넣어줌
 
                 print('성공!')
@@ -82,40 +89,21 @@ class User:
         text = self.browser.find_element(By.XPATH, user_xpath).text.strip()
         return text
 
-    def paging(self, user_path):
-        #return self.browser.find_elements(By.CSS_SELECTOR,'#app > div.searchWrap > div.containerWrap.cSection.el-row > div.kcarSearchCnt > div:nth-child(4) > div:nth-child(2) > div.pagination.-sm > div')
-        #app > div.searchWrap > div.containerWrap.cSection.el-row > div.kcarSearchCnt > div:nth-child(4) > div:nth-child(2) > div.carListWrap
-        time.sleep(1)
-        return self.browser.find_element(By.XPATH, user_path).text
-
-
-    # 선택한값 클릭하진 말고 텍스트로 반환만
+    # 선택한값 클릭하진 말고 텍스트로 반환
     def 객체선택(self, user_xpath):
         return self.browser.find_element(By.XPATH, user_xpath).text
     
     def 종료(self):
         print("종료된 로그 찍기")
         self.browser.close()
-    
-    # delay 기능 넣기
+
+
     def delay(self, sec=1):
         self.browser.implicitly_wait(sec)
         
-
     def 새창으로활성이동(self, number):
         # 셀레니움은 윈도우 구분을 위해 window_handles 변수에 이름을 리스트로 저장
         # 리스트에는 윈도우가 생성된 순으로 저장됨
         print(self.browser.window_handles) # 팝업된 윈도우들 몇개있나 보여주기
         self.browser.switch_to.window(self.browser.window_handles[number]) # 기존 객체에서 1번 객체(윈도우)로 이동 by 'switch_to'
     
-    def 마우스이동하고클릭(self, user_xpath):
-        ac = ActionChains(self.browser)
-        # ac.move_by_offset(0, 350)
-        web_elements = self.browser.find_element(By.XPATH, user_xpath)
-        ac.click(web_elements)
-        # ac.click()
-        ac.perform()
-    
-    # 페이지 넘어가는 규칙에 따라 넘어가기 실행
-    def paging(self, user_full_xpath):
-        self.browser.find_element(By.XPATH, user_full_xpath)
