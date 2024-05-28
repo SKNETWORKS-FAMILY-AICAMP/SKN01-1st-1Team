@@ -7,7 +7,7 @@ from urllib.parse import quote_plus
 import os
 import signal
 from selenium.webdriver.common.action_chains import ActionChains
-
+import time
 
 chrome_driver = r"C:\Users\USER\Desktop\workspace01\crawling\driver\chromedriver.exe"
 
@@ -62,7 +62,13 @@ class User:
         self.browser.find_element(By.XPATH, user_xpath).send_keys(item_name)
 
     def 객체선택하고클릭(self, user_xpath):
-        self.browser.find_element(By.XPATH, user_xpath).click()
+        try:    
+            self.browser.find_element(By.XPATH, user_xpath).click()
+        except:
+            clickable = self.browser.find_element(By.XPATH, user_xpath)
+            action = ActionChains(self.browser).move_to_element(clickable)
+            action.perform()
+            clickable.click()
         # self.browser.find_element(By.XPATH, user_xpath).send_keys(Keys.ENTER)
     def 객체선택하고객체의텍스트추출(self, user_xpath):
         return self.browser.find_element(By.XPATH, user_xpath).text
@@ -72,11 +78,10 @@ class User:
         print("작업완료됨로그찍기")
 
     def 브라우저딜레이(self, second=1):
-        self.browser.implicitly_wait(second)
+        #self.browser.implicitly_wait(second)
+        time.sleep(second)
 
     def 일반딜레이(self, second=1):
-        import time
-
         time.sleep(second)
 
     def 새창으로활성이동(self, idx):
