@@ -3,11 +3,6 @@ import os
 
 if __name__ == "__main__":
     # 테이블로 레코드 인서트
-    #record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\케이카_원본.xlsx"))
-    #record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\FAQ_원본.xlsx"))
-    
-    
-    # 파이썬과 db연동해서 crud 실행 
     try:
         user = "root"
         password = ""
@@ -17,8 +12,11 @@ if __name__ == "__main__":
         table = "review"
         db_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}"
         record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\리뷰_원본.xlsx"), db_url, table)
-        #db = MySQLDatabase(db_url)
+        #record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\케이카_원본.xlsx"))
+        #record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\FAQ_원본.xlsx"))
 
+        # 파이썬과 db연동해서 crud 실행 
+        #db = MySQLDatabase(db_url)
         # print(db.__repr__)
         # db.add_user("john_doe", "john@example.com")
         # user =  db.get_user_by_username("john_doe")

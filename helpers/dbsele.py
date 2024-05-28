@@ -1,11 +1,8 @@
 import pandas as pd
-import pymysql.cursors
 from sqlalchemy import engine, create_engine, DateTime, Column, Integer, String, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import func
 import sqlalchemy
-# from sqlalchemy.orm import declarative_base
 
 # 자동화로 만들어야할 것 같음, 테이블마다 입력 직접 지정하기 어려움
 def record_insert(file_path, db_url, table):

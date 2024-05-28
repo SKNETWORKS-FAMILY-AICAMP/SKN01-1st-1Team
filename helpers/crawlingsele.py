@@ -68,7 +68,6 @@ class User:
         try:
             #self.browser.find_element(By.XPATH, user_xpath).click()
             self.browser.find_element(By.XPATH, user_xpath).send_keys(Keys.ENTER)
-            #ActionChains(self.browser).click(clickable).perform()
             print('버튼 클릭 성공')
         except Exception as e:
             print('By.XPATH로 클릭되지 않습니다. By.PARTIAL_LINK_TEXT로 접근합니다! ')

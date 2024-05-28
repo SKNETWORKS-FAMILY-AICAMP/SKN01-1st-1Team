@@ -1,6 +1,6 @@
 from helpers.crawlingsele import User
 import pandas as pd
-import time
+import time, os
 
 if __name__ == "__main__":
 
@@ -35,10 +35,6 @@ if __name__ == "__main__":
                 )
                 time.sleep(1)
                 try:
-                    # perf = user.객체선택(
-                    #         f"/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[1]/div[2]/div[{i+1}]/div/div/div[{j+1}]/div[2]/div/div/div"
-                    #     )
-                    # print(perf)
                     답변.append(
                         user.객체선택(
                             f"/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[1]/div[2]/div[{i+1}]/div/div/div[{j+1}]/div[2]/div/div/div"
@@ -48,12 +44,11 @@ if __name__ == "__main__":
                 except Exception as e:
                     답변.append("답변안들어옴")
                     print(f"{i}페이지{j}질문 오류")
-
         except Exception as e:
             print(e)
     df = pd.DataFrame(
         data=zip(질문, 답변),
         columns=["질문", "답변"]
     )
-    # 너의 경로 입력
-    df.to_excel(r"C:\Users\hojun\Downloads\workspace01\data\FAQ.xlsx")
+    # os.getcwd()로 경로 맞춤
+    df.to_excel(os.getcwd() + "\\data\\FAQ.xlsx", index=False)

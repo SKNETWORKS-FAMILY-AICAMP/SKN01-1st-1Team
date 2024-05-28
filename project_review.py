@@ -1,15 +1,11 @@
 # selenium으로 사이트 뜯기
 
-#from helpers.db import MySQLDatabase
 from helpers.dbsele import *
-#from helpers.crawling import 수집
 from helpers.crawlingsele import User
 import pandas as pd
-import time
-import os
+import time, os
 
 if __name__ == "__main__":
-
     user = User("n") # k car 사이트
     user.페이지이동("https://www.kcar.com/bc/review/BuyCustReview")
     
@@ -17,12 +13,9 @@ if __name__ == "__main__":
     review = [] # 내용
     model = [] # 차종
     date = [] # 날짜
-    image = [] # 이미지 ?
 
-    # 모든 페이지 크롤링
     cnt = 0
     for i in range(14):
-        #time.sleep(1)
         user.delay(1)
         for j in range(1,9): # 8개의 리뷰 클릭
             # 리뷰 박스 클릭
@@ -30,12 +23,11 @@ if __name__ == "__main__":
             time.sleep(1)
             title.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/h5'))
             review.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/p'))
-            # 차종, 날짜 같이 선택되는거 분리
+            # 차종, 날짜 같이 선택되는 것 분리
             model_date = user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div/span')
             mo, da = model_date[:-10], model_date[-10:]
             model.append(mo)
             date.append(da)
-            # image.append(user.객체선택(f'//*[@id="app"]/div[2]/div[2]/div[2]/div[4]/div[2]/div[2]/div[{j}]/div[2]/div[2]/p/span[2]'))
             
             # 다 넣었다면 리뷰창 나가기 (x창 눌러서)
             user.click_button(f'//*[@id="app"]/div[2]/div[2]/div/div/div[1]/button')
@@ -51,9 +43,6 @@ if __name__ == "__main__":
         data=zip(title, review, model, date),
         columns=["제목", "내용", "차종", "리뷰 날짜"]
     )
-    # 너의 경로 입력
-    df.to_excel(r"C:\Users\hojun\Downloads\workspace01\data\리뷰.xlsx")
-
-    # # 테이블로 레코드 인서트
-    # record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\리뷰.xlsx"))
+    # 너의 경로 입력 (os.getcwd()를 통해 각자 경로다른 사람들이 써도 사용 가능하도록)
+    df.to_excel(os.getcwd() + "\\data\\리뷰.xlsx", index=False)
 
