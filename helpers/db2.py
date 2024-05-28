@@ -1,6 +1,6 @@
 import pymysql
 import pandas as pd
-
+import os
 
 def create_database(cursor, db_name):
     # 데이터베이스 생성 SQL 쿼리
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     password = "encore1234"
     db_name = "used_car"
     file_path = (
-        r"C:\Users\USER\Dropbox\BOOTCAMP\workspace\1st_project\data\FAQ.xlsx"
+        os.getcwd()+"\\data\\FAQ.xlsx"
     )
 
     # MySQL 연결

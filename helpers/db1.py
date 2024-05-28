@@ -1,6 +1,6 @@
 import pymysql
 import pandas as pd
-
+import os
 
 def create_database(cursor, db_name):
     # 데이터베이스 생성 SQL 쿼리
@@ -46,14 +46,14 @@ def insert_data_from_xlsx(cursor, file_path):
 
     print("Data inserted into the database successfully.")
 
-
+# os.getcwd()+"\\data\\케이카_리스만+금액거리처리.xlsx"
 if __name__ == "__main__":
     # MySQL 연결 정보
     host = "localhost"
     user = "encore"
     password = "encore1234"
     db_name = "used_car"
-    file_path = r"C:\Users\USER\Dropbox\BOOTCAMP\workspace\1st_project\data\K-carlist.xlsx"
+    file_path = os.getcwd()+"\\data\\K-carlist.xlsx"
 
     # MySQL 연결
     connection = pymysql.connect(host=host, user=user, password=password)
