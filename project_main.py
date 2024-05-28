@@ -22,7 +22,7 @@ if __name__ == "__main__":
     
     # 모든 페이지 크롤링
     cnt = 0
-    for i in range(121):
+    for i in range(1):# 121:
         #time.sleep(1)
         user.delay(1)
         # > 버튼으로 다음 페이지 넘어가기
@@ -44,10 +44,10 @@ if __name__ == "__main__":
         columns=["모델명", "가격","연식","주행 거리", "연료", "거래 장소"]
     )
     # 너의 경로 입력
-    df.to_excel(r"C:\Users\hojun\Downloads\workspace01\data\케이카.xlsx")
+    df.to_excel(r"C:\Users\Playdata\Downloads\협업\SKN01-1st-1Team\data\케이카.xlsx")
 
     # 테이블로 레코드 인서트
-    record_insert(os.path.join(r"C:\Users\hojun\Downloads\workspace01\data\케이카.xlsx"))
+    record_insert(os.path.join(r"C:\Users\Playdata\Downloads\협업\SKN01-1st-1Team\data\케이카.xlsx"))
     
     # 파이썬과 db연동해서 crud 실행 
     # try:
