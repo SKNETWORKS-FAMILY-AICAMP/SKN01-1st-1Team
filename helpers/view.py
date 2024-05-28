@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import pymysql
 import datetime
+import plotly.express as px
 from datetime import datetime as dt
 
 
@@ -41,9 +42,27 @@ class View:
         data2 = fetch_data_from_database("faq")
         st.write(data2)
 
-        dataframe = pd.DataFrame(data1)
+        # 순번 = []
+        # 연료 = []
 
-        st.plotly_chart(dataframe)
+        # for i in range(1000):
+        #     순번.append(data1.id[i])
+        #     연료.append(data1.연료[i])
+
+        # chartdata = {
+        #     '순번' : 순번,
+        #     '연료' : 연료
+        # }
+        # cd = pd.DataFrame(chartdata)
+
+        # fig = px.pie(cd, name='순번', values='연료', 
+	    # title='K-car중고차 연료타입', hole=.3) # hole을 주면 donut 차트
+
+        # fig.update_traces(textposition='inside', textinfo='percent+label+value')
+        # fig.update_layout(font=dict(size=14))
+        # fig.update(layout_showlegend=False) # 범례표시 제거
+
+        # st.plotly_chart(fig)
 
         # Streamlit 앱 제목
 
