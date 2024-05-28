@@ -15,9 +15,9 @@ def create_table(cursor):
         CREATE TABLE IF NOT EXISTS carlist (
             id INT AUTO_INCREMENT PRIMARY KEY,
             모델명 TEXT,
-            가격 TEXT,
+            가격 INTEGER,
             연식 TEXT,
-            주행거리 TEXT,
+            주행거리 INTEGER,
             연료 TEXT,
             거래장소 TEXT
         );
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     user = "encore"
     password = "encore1234"
     db_name = "used_car"
-    file_path = r"C:\Users\USER\Dropbox\BOOTCAMP\workspace\1st_project\data\K-car.xlsx"
+    file_path = r"C:\Users\USER\Dropbox\BOOTCAMP\workspace\1st_project\data\K-carlist.xlsx"
 
     # MySQL 연결
     connection = pymysql.connect(host=host, user=user, password=password)
